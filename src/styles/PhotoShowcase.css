@@ -1,0 +1,93 @@
+/* ==========================
+   Photo Showcase Styles
+   - Reset body margins
+   - Fixed-width 4‑column grid
+   - Exact image sizing with aspect ratio
+   - Responsive fallbacks
+   ========================== */
+
+   html, body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .photo-showcase-container {
+    width: 100%;            /* span full viewport */
+    padding: 40px 20px;     /* vertical padding + side gutters */
+    box-sizing: border-box;
+  }
+  
+  .showcase-intro {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-dark);
+  }
+  
+  /* Grid parameters */
+  :root {
+    --column-width: 200px;
+    --grid-gap: 20px;
+  }
+  
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, var(--column-width));
+    gap: var(--grid-gap);
+    justify-content: center;  /* center the whole grid */
+    margin: 0 auto;
+  }
+  
+  .photo-item {
+    width: var(--column-width);
+    aspect-ratio: 5/7;       /* maintain proportions */
+  }
+  
+  .photo-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 10px 20px rgba(13, 40, 64, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .photo-container:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(13, 40, 64, 0.2);
+  }
+  
+  .showcase-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .photo-container:hover .showcase-image {
+    transform: scale(1.05);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: calc( (2 * var(--column-width)) + var(--grid-gap) + 40px )) {
+    /* 2 columns when viewport < 2 cols + gutter + container padding */
+    .photo-grid {
+      grid-template-columns: repeat(2, var(--column-width));
+    }
+  }
+  
+  @media (max-width: calc(var(--column-width) + 40px)) {
+    /* 1 column when viewport < 1 col + container padding */
+    .photo-grid {
+      grid-template-columns: 1fr;
+      justify-content: center;
+    }
+    .photo-item {
+      width: 100%;          /* let it fill the container */
+      aspect-ratio: 4/3;    /* slightly adjust for mobile */
+    }
+  }
+  
